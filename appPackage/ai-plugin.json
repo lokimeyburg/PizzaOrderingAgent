@@ -1,0 +1,183 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.1/schema.json",
+    "schema_version": "v2.1",
+    "name_for_human": "Pizza API",
+    "description_for_human": "API for managing pizza orders and related operations",
+    "description_for_model": "API for managing pizza orders and related operations",
+    "contact_email": "publisher-email@example.com",
+    "namespace": "pizzaparloragent",
+    "capabilities": {
+        "conversation_starters": [
+            {
+                "text": "Get OpenAPI specification"
+            },
+            {
+                "text": "Get all orders"
+            },
+            {
+                "text": "Create a new order"
+            },
+            {
+                "text": "Get order by ID"
+            },
+            {
+                "text": "Cancel an order"
+            },
+            {
+                "text": "Get all pizzas"
+            },
+            {
+                "text": "Get pizza by ID"
+            },
+            {
+                "text": "Get all toppings"
+            },
+            {
+                "text": "Get all topping categories"
+            },
+            {
+                "text": "Get topping by ID"
+            },
+            {
+                "text": "Get an image"
+            }
+        ]
+    },
+    "functions": [
+        {
+            "name": "cancelOrder",
+            "description": "Cancels an order if it has not yet been started (status must be &apos;pending&apos;).\n\nThe `userId` query parameter is required (e.g., `?userId=user123`).\nIf `userId` is missing or does not match the `userId` of the order, the request will be rejected.\n",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/cancelOrder.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "createOrder",
+            "description": "Places a new order with pizzas (requires userId).\n\nThe estimated completion time is as follows:\n- 3-5 minutes for 1-2 pizzas, plus 1 minute for each additional pizza.\n\nOrder statuses are updated automatically:\n- Orders move from &apos;pending&apos; to &apos;in-preparation&apos; 1-3 minutes after creation.\n- Orders move from &apos;in-preparation&apos; to &apos;completed&apos; 2-3 minutes around their estimated completion time.\n",
+            "capabilities": {}
+        },
+        {
+            "name": "getImage",
+            "description": "Retrieves an image from Azure Blob Storage",
+            "capabilities": {}
+        },
+        {
+            "name": "getOpenApiSpec",
+            "description": "Returns the OpenAPI specification in YAML format.",
+            "capabilities": {}
+        },
+        {
+            "name": "getOrderById",
+            "description": "Retrieves an order by its ID",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getOrderById.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getOrders",
+            "description": "Returns a list of all orders in the system",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getOrders.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getPizzaById",
+            "description": "Retrieves a specific pizza by its ID",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getPizzaById.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getPizzas",
+            "description": "Returns a list of all pizzas",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getPizzas.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getToppingById",
+            "description": "Retrieves a specific topping by its ID",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getToppingById.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getToppingCategories",
+            "description": "Returns a list of all topping categories",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getToppingCategories.json"
+                    }
+                }
+            }
+        },
+        {
+            "name": "getToppings",
+            "description": "Returns a list of all toppings",
+            "capabilities": {
+                "response_semantics": {
+                    "data_path": "$",
+                    "static_template": {
+                        "file": "./adaptiveCards/getToppings.json"
+                    }
+                }
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/openapi.yaml"
+            },
+            "run_for_functions": [
+                "getOpenApiSpec",
+                "getOrders",
+                "createOrder",
+                "getOrderById",
+                "cancelOrder",
+                "getPizzas",
+                "getPizzaById",
+                "getToppings",
+                "getToppingCategories",
+                "getToppingById",
+                "getImage"
+            ]
+        }
+    ]
+}

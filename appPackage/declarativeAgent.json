@@ -1,0 +1,33 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.3/schema.json",
+    "version": "v1.3",
+    "name": "PizzaParlorAgent",
+    "description": "Declarative agent created with Microsoft 365 Agents Toolkit",
+    "instructions": "$[file('instruction.txt')]",
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ],
+    "conversation_starters": [
+        {
+            "text": "Get OpenAPI specification"
+        },
+        {
+            "text": "Get all orders"
+        },
+        {
+            "text": "Create a new order"
+        },
+        {
+            "text": "Get order by ID"
+        },
+        {
+            "text": "Cancel an order"
+        },
+        {
+            "text": "Get all pizzas"
+        }
+    ]
+}
